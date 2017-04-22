@@ -22,10 +22,9 @@ var MovieSelect = function (_Component) {
     var _this = _possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args)));
 
     _this.state = {
-      value: '',
+      value: _this.props.value,
       suggestions: []
     };
-
 
     _this.fetchSuggestions = debounce(_this._fetchSuggestions.bind(_this), _this.props.debounce);
     _this._fetchRequest = null;
@@ -72,7 +71,9 @@ var MovieSelect = function (_Component) {
     var _state = this.state,
         value = _state.value,
         suggestions = _state.suggestions;
-    var placeholder = this.props.placeholder;
+    var _props = this.props,
+        placeholder = _props.placeholder,
+        theme = _props.theme;
 
 
     var inputProps = {
@@ -135,6 +136,7 @@ var MovieSelect = function (_Component) {
         return val.Title;
       },
       inputProps: inputProps,
+      theme: theme,
       onSuggestionSelected: function onSuggestionSelected(event, _ref5) {
         var suggestion = _ref5.suggestion;
         return _this3.props.onMovieSelected(suggestion);
@@ -150,9 +152,12 @@ export { MovieSelect as default };
 
 process.env.NODE_ENV !== "production" ? MovieSelect.propTypes = {
   debounce: PropTypes.number,
-  onMovieSelected: PropTypes.func.isRequired
+  onMovieSelected: PropTypes.func.isRequired,
+  theme: PropTypes.object,
+  value: PropTypes.string
 } : void 0;
 
 MovieSelect.defaultProps = {
-  debounce: 350
+  debounce: 350,
+  value: ''
 };
