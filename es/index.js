@@ -65,8 +65,22 @@ var MovieSelect = function (_Component) {
     this.setState({ suggestions: [] });
   };
 
-  MovieSelect.prototype.render = function render() {
+  MovieSelect.prototype.handleSuggestionSelected = function handleSuggestionSelected(event, _ref2) {
     var _this3 = this;
+
+    var suggestion = _ref2.suggestion;
+
+    event.preventDefault();
+
+    fetch('http://www.omdbapi.com/?i=' + suggestion.imdbID + '&plot=full').then(function (resp) {
+      return resp.json();
+    }).then(function (movieModel) {
+      return _this3.props.onMovieSelected(movieModel);
+    });
+  };
+
+  MovieSelect.prototype.render = function render() {
+    var _this4 = this;
 
     var _state = this.state,
         value = _state.value,
@@ -79,10 +93,10 @@ var MovieSelect = function (_Component) {
     var inputProps = {
       placeholder: placeholder,
       value: value,
-      onChange: function onChange(event, _ref2) {
-        var newValue = _ref2.newValue;
+      onChange: function onChange(event, _ref3) {
+        var newValue = _ref3.newValue;
 
-        _this3.setState({ value: newValue });
+        _this4.setState({ value: newValue });
       }
     };
 
@@ -93,11 +107,11 @@ var MovieSelect = function (_Component) {
       return isString(url) && /^https?:\/\//.test(url);
     };
 
-    var renderSuggestion = function renderSuggestion(_ref3) {
-      var Title = _ref3.Title,
-          Year = _ref3.Year,
-          Poster = _ref3.Poster,
-          imdbID = _ref3.imdbID;
+    var renderSuggestion = function renderSuggestion(_ref4) {
+      var Title = _ref4.Title,
+          Year = _ref4.Year,
+          Poster = _ref4.Poster,
+          imdbID = _ref4.imdbID;
       return React.createElement(
         'div',
         { className: 'movie-select-item--container' },
@@ -127,9 +141,9 @@ var MovieSelect = function (_Component) {
     return React.createElement(Autosuggest, {
       suggestions: suggestions,
       renderSuggestion: renderSuggestion,
-      onSuggestionsFetchRequested: function onSuggestionsFetchRequested(_ref4) {
-        var value = _ref4.value;
-        return _this3.fetchSuggestions(value);
+      onSuggestionsFetchRequested: function onSuggestionsFetchRequested(_ref5) {
+        var value = _ref5.value;
+        return _this4.fetchSuggestions(value);
       },
       onSuggestionsClearRequested: this.clearSuggestions.bind(this),
       getSuggestionValue: function getSuggestionValue(val) {
@@ -137,10 +151,7 @@ var MovieSelect = function (_Component) {
       },
       inputProps: inputProps,
       theme: theme,
-      onSuggestionSelected: function onSuggestionSelected(event, _ref5) {
-        var suggestion = _ref5.suggestion;
-        return _this3.props.onMovieSelected(suggestion);
-      }
+      onSuggestionSelected: this.handleSuggestionSelected.bind(this)
     });
   };
 

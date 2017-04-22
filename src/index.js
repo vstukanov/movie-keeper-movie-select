@@ -49,6 +49,15 @@ class MovieSelect extends Component {
     this.setState({ suggestions: [] });
   }
 
+  handleSuggestionSelected(event, { suggestion })
+  {
+    event.preventDefault();
+
+    fetch(`http://www.omdbapi.com/?i=${suggestion.imdbID}&plot=full`)
+      .then(resp => resp.json())
+      .then(movieModel => this.props.onMovieSelected(movieModel));
+  }
+
   render()
   {
     const { value, suggestions } = this.state;
@@ -88,7 +97,7 @@ class MovieSelect extends Component {
         getSuggestionValue={ val => val.Title }
         inputProps={inputProps}
         theme={theme}
-        onSuggestionSelected={(event, { suggestion }) => this.props.onMovieSelected(suggestion) }
+        onSuggestionSelected={this.handleSuggestionSelected.bind(this)}
       />
     );
   }
