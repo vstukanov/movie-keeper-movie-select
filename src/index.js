@@ -5,14 +5,14 @@ import { debounce, fetchWithCancel } from './Utils';
 
 export default
 class MovieSelect extends Component {
-  state = {
-    value: '',
-    suggestions: []
-  };
-
   constructor (...args)
   {
     super(...args);
+
+    this.state = {
+      value: this.props.value,
+      suggestions: []
+    };
 
     this.fetchSuggestions = debounce(this._fetchSuggestions.bind(this), this.props.debounce);
     this._fetchRequest = null;
@@ -52,7 +52,7 @@ class MovieSelect extends Component {
   render()
   {
     const { value, suggestions } = this.state;
-    const { placeholder } = this.props;
+    const { placeholder, theme } = this.props;
 
     const inputProps = {
       placeholder,
@@ -87,6 +87,7 @@ class MovieSelect extends Component {
         onSuggestionsClearRequested={this.clearSuggestions.bind(this)}
         getSuggestionValue={ val => val.Title }
         inputProps={inputProps}
+        theme={theme}
         onSuggestionSelected={(event, { suggestion }) => this.props.onMovieSelected(suggestion) }
       />
     );
@@ -95,9 +96,12 @@ class MovieSelect extends Component {
 
 MovieSelect.propTypes = {
   debounce: PropTypes.number,
-  onMovieSelected: PropTypes.func.isRequired
+  onMovieSelected: PropTypes.func.isRequired,
+  theme: PropTypes.object,
+  value: PropTypes.string
 };
 
 MovieSelect.defaultProps = {
-  debounce: 350
+  debounce: 350,
+  value: ''
 };
