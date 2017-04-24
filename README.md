@@ -1,8 +1,8 @@
 # movie-keeper-movie-select
 
-[![Travis][build-badge]][build]
+[![Build Status](https://travis-ci.org/vstukanov/movie-keeper-movie-select.svg?branch=master)](https://travis-ci.org/vstukanov/movie-keeper-movie-select)
 [![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
+[![Coverage Status](https://coveralls.io/repos/github/vstukanov/movie-keeper-movie-select/badge.svg?branch=master)](https://coveralls.io/github/vstukanov/movie-keeper-movie-select?branch=master)
 
 Describe movie-keeper-movie-select here.
 
