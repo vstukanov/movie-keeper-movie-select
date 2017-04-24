@@ -30,7 +30,9 @@
     "enzyme": "^2.8.2",
     "nwb": "0.15.x",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-addons-test-utils": "^15.5.1",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4"
   },
   "author": "Valerij Stukanov <vstukanov@me.com>",
   "homepage": "",
