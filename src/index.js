@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import { debounce, fetchWithCancel } from './Utils';
+import 'whatwg-fetch';
 
 export default
 class MovieSelect extends Component {
@@ -79,7 +80,7 @@ class MovieSelect extends Component {
         <div className="movie-select-item--poster">
           { isHref(Poster)
             ? <img className="movie-select-item--image" src={Poster} alt={Title} />
-            : <div className="movie-select-item--no-image"></div>
+            : <div className="movie-select-item--no-image" />
           }
         </div>
         <div className="movie-select-item--title">{ Title }</div>

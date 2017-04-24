@@ -20,12 +20,14 @@
   },
   "dependencies": {
     "prop-types": "^15.5.8",
-    "react-autosuggest": "^9.0.1"
+    "react-autosuggest": "^9.0.1",
+    "whatwg-fetch": "^2.0.3"
   },
   "peerDependencies": {
     "react": "^15.3.0"
   },
   "devDependencies": {
+    "enzyme": "^2.8.2",
     "nwb": "0.15.x",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"

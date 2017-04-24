@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 /**
  * Creates and returns a new debounced version of the passed function
  * which will postpone its execution until after wait milliseconds have
