@@ -1,9 +1,12 @@
-
 import 'whatwg-fetch';
 import { spyOn, createSpy } from 'expect';
 
 export function waitFor (delay) {
   return new Promise(fullfill => setTimeout(fullfill, delay));
+}
+
+export function waitForTick () {
+  return waitFor(0);
 }
 
 const generateResponse = (data, delay) =>

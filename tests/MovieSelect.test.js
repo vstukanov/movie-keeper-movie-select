@@ -2,8 +2,8 @@ import expect, { spyOn, createSpy } from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
 
-import MovieSelect from '../src';
-import { mockSearchMovie, mockGetMovie, waitFor } from './FetchMock';
+import MovieSelect from '../src/MovieSelect';
+import { mockSearchMovie, mockGetMovie, waitFor, waitForTick } from './FetchMock';
 
 const movieModel = {
   Title: "Breaking Bad",
@@ -17,7 +17,6 @@ const movieWithId = imdbID =>
   Object.assign({}, movieModel, { imdbID });
 
 const waitForDebounce = () => waitFor(compDebounceTime + 20);
-const waitForTick = () => waitFor(0);
 
 const onMovieSelectedSpy = createSpy();
 const compDebounceTime = 100;
@@ -106,6 +105,33 @@ describe('<MovieSelect />', () => {
         shortFetchMock.restore();
       });
     });
+
+    it('should clear result for not found', () => {
+      const notFoundFetchMock = mockSearchMovie('not_found_request',
+        null);
+
+      requestSelect('not_found_request');
+
+      return waitForDebounce()
+        .then(() => expectHasResult(false))
+        .then(() => notFoundFetchMock.restore());
+    });
+
+    it('should properly render movie without poster', () => {
+      const withNoPosterFetchMock = mockSearchMovie('no_poster_request',
+        [Object.assign({}, movieModel, { Poster: new String('N/A') })]
+        );
+
+      requestSelect('no_poster_request');
+
+      return waitForDebounce()
+        .then(() => {
+          expectHasResult(true);
+          expect(component.find('.movie-select-item--no-image').exists())
+            .toBe(true);
+          withNoPosterFetchMock.restore();
+        });
+    });
   });
 
   describe('result', () => {
@@ -123,7 +149,8 @@ describe('<MovieSelect />', () => {
       component.find('.movie-select-item--container').simulate('click');
 
       return waitForTick()
-          .then(() => expect(onMovieSelectedSpy).toHaveBeenCalledWith(movieModel));
+          .then(() => expect(onMovieSelectedSpy)
+            .toHaveBeenCalledWith(movieModel));
     });
   });
 });

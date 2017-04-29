@@ -1,7 +1,7 @@
 import React from 'react'
 import {render} from 'react-dom'
 
-import Component from '../../src'
+import Component from '../../src/MovieSelect'
 
 let Demo = React.createClass({
   render() {

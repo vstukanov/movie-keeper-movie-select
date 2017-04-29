@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 /**
  * Creates and returns a new debounced version of the passed function
  * which will postpone its execution until after wait milliseconds have
@@ -44,5 +46,22 @@ export function fetchWithCancel() {
     cancel: function cancel() {
       return canceled = true;
     }
+  };
+}
+
+/**
+ * Prevent default for input event and call input function
+ * @param {Function} fn - handler function
+ * @param args - rest arguments
+ * @returns {function(*)}
+ */
+export function preventAndCall(fn) {
+  for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    args[_key2 - 1] = arguments[_key2];
+  }
+
+  return function (event) {
+    event.preventDefault();
+    fn.apply(undefined, args);
   };
 }
