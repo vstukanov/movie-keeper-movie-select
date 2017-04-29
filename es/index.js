@@ -1,2 +1,1 @@
-import MovieAddOverlay from './MovieAddOverlay';
-export default MovieAddOverlay;
+export { default as MovieAddOverlay } from './MovieAddOverlay';
