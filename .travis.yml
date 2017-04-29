@@ -17,8 +17,8 @@ after_success:
 
 test:
   override:
-    yarn add --force phantomjs-prebuilt
-    yarn test
+    - yarn add --force phantomjs-prebuilt
+    - yarn test
 
 branches:
   only:
